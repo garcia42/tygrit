@@ -147,13 +147,16 @@ const Home: NextPage = () => {
             </h1>
 
             <h5 className="text-lg">
-              Passive feedback from your regular games
+              Tailored feedback for your games
             </h5>
 
-            <form className=" bg-opacity-50 bg-black inline-flex mt-4" onSubmit={(e) => submitEmail(e, email)}>
-              <input name="email" value={email} onChange={(e) => setEmail(e.target.value)} className="flex-4 border border-gray-500 pl-1" placeholder="email address"></input>
-              <button className="flex-1 text-white bg-red-600 p-2">Sign Up</button>
-            </form>
+            <div className=" bg-opacity-50 mt-4">
+              <span>Sign up to be notified of the beta release</span>
+              <form className=" bg-opacity-50 bg-black inline-flex" onSubmit={(e) => submitEmail(e, email)}>
+                <input name="email" value={email} onChange={(e) => setEmail(e.target.value)} className="flex-4 border border-gray-500 pl-1" placeholder="email address"></input>
+                <button className="flex-1 text-white bg-red-600 p-2">Sign Up</button>
+              </form>
+            </div>
           </div>
 
           <div className="hidden md:flex justify-between">
@@ -187,7 +190,7 @@ const Home: NextPage = () => {
                   <Image alt="personalized" height={40} width={40} src={"/exchange.png"}/>
                 </div>
             </div>
-            <p>Coaches can track your progress over time to focus on identifying problem areas</p>
+            <p>Let experts look at your play and pin point exactly what you need to play better chess</p>
           </div>
 
           <div style={cardStyle} className="hover:!text-blue-400 !border-blue-400 md:max-w-xs">
@@ -197,7 +200,18 @@ const Home: NextPage = () => {
                 <Image alt="clock" height={40} width={40} src={"/clock.png"}/>
               </div>
             </div>
-            <p>Let experts look at your play and pin point exactly what you need to play better chess</p>
+            <p>Request individual games to be reviewed and get feedback by the next day</p>
+          </div>
+        </div>
+
+        <div className="justify-center mt-10 items-center md:flex mx-auto">
+          <Image alt="Chess Review" width={400} height={400} src={"/chessBoard.png"}/>
+          <div className="md:w-1/3 ml-2 p-2 bg-slate-200 rounded-xl">
+            <div className="mb-2">Against these stonewall structures make sure to lock down the center and finish developing before attacking on the flank.</div>
+            <div className="flex items-center">
+              <Image className="rounded-full" alt="master" width={30} height={30} src={"/chad.jpeg"}/>
+              <p className="ml-1">FM Chadley Gigaton (2469)</p>
+            </div>
           </div>
         </div>
       </main>
