@@ -105,12 +105,15 @@ const Home: NextPage = () => {
       <Head>
         <title>Async Chess Coach</title>
         <meta name="description" content="Games reviewed in the background" />
-        <link rel="icon" href="/favicon.ico" />
+        <link rel="icon" href="/chess-strategy.png" />
       </Head>
 
       <div className="flex my-3">
           <Link href={"/"}>
-            <a className="font-bold">Async Chess Coach</a>
+            <a className="font-bold flex">
+              <Image width={30} height={30} alt="logo" src={"/chess-strategy.png"}/>
+              <div className="self-center">Async Chess Coach</div>
+              </a>
           </Link>
       </div>
 
@@ -236,6 +239,9 @@ const Home: NextPage = () => {
           </div>
           <div>
             <a href="https://www.flaticon.com/free-icons/sync" title="sync icons">Sync icons created by Freepik - Flaticon</a>
+          </div>
+          <div>
+          <a href="https://iconscout.com/icons/chess-strategy">Chess strategy Icon</a> by <a href="https://iconscout.com/contributors/iconscout">Iconscout Store</a>
           </div>
         </div>
         </div>
