@@ -1,8 +1,8 @@
+import 'tailwindcss/tailwind.css'
 import type { NextPage } from 'next'
 import Head from 'next/head'
 import Image from 'next/image'
 import Link from "next/link"
-import styles from '../styles/Home.module.css'
 
 function submitEmail(e: React.SyntheticEvent) {
   e.preventDefault()
@@ -12,6 +12,16 @@ function submitEmail(e: React.SyntheticEvent) {
   };
   target.email.value;
 }
+
+const cardStyle = {
+  "padding": "1.5rem",
+  "textAlign": "left",
+  "color": "inherit",
+  "textDecoration": "none",
+  "border": "1px solid #eaeaea",
+  "borderRadius": "10px",
+  "transition": "color 0.15s ease, border-color 0.15s ease",
+} as any;
 
 const Home: NextPage = () => {
   return (
@@ -61,7 +71,7 @@ const Home: NextPage = () => {
         </div>
 
         <div className="flex align-center justify-center flex-wrap mt-3">
-          <div className={styles.card}>
+          <div style={cardStyle}>
             <div className="flex items-center">
               <h2 className="!mr-4">Hands Free</h2>
               <div className="block">
@@ -71,7 +81,7 @@ const Home: NextPage = () => {
             <p>Your games automatically sync with Async Coach, no need to upload anything</p>
           </div>
 
-          <div className={styles.card}>
+          <div style={cardStyle}>
           <div className="flex items-center">
             <h2 className="!mr-4">Personalized</h2>
               <div className="block">
@@ -81,7 +91,7 @@ const Home: NextPage = () => {
             <p>Coaches can track your progress over time to focus on identifying problem areas</p>
           </div>
 
-          <div className={styles.card}>
+          <div style={cardStyle}>
             <div className="flex items-center">
               <h2 className="!mr-4">Save Time</h2>
               <div className="block">
@@ -92,8 +102,7 @@ const Home: NextPage = () => {
           </div>
         </div>
       </main>
-
-      <footer className={styles.footer}>
+      <footer className="flex flex-1 py-4 mt-8 border-t justify-center items-center">
         <div className="block">
         <a
           href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
@@ -101,14 +110,20 @@ const Home: NextPage = () => {
           rel="noopener noreferrer"
         >
           Powered by{' '}
-          <span className={styles.logo}>
+          <span className=" h-4 ml-2">
             <Image src="/vercel.svg" alt="Vercel Logo" width={72} height={16} />
           </span>
         </a>
         <div className="block">
-          <a href="https://www.flaticon.com/free-icons/quick" title="quick icons">Quick icons created by kornkun - Flaticon</a>
-          <a href="https://www.flaticon.com/free-icons/personalization" title="personalization icons">Personalization icons created by Freepik - Flaticon</a>
-          <a href="https://www.flaticon.com/free-icons/sync" title="sync icons">Sync icons created by Freepik - Flaticon</a>
+          <div>
+            <a href="https://www.flaticon.com/free-icons/quick" title="quick icons">Quick icons created by kornkun - Flaticon</a>
+          </div>
+          <div>
+            <a href="https://www.flaticon.com/free-icons/personalization" title="personalization icons">Personalization icons created by Freepik - Flaticon</a>
+          </div>
+          <div>
+            <a href="https://www.flaticon.com/free-icons/sync" title="sync icons">Sync icons created by Freepik - Flaticon</a>
+          </div>
         </div>
         </div>
       </footer>
