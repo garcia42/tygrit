@@ -10,10 +10,13 @@ function submitEmail(e: React.SyntheticEvent) {
     email: { value: string };
     password: { value: string };
   };
-  target.email.value;
+  if (target.email.value) {
+    
+  }
 }
 
 const cardStyle = {
+  "marginTop": "1rem",
   "padding": "1.5rem",
   "textAlign": "left",
   "color": "inherit",
@@ -41,17 +44,17 @@ const Home: NextPage = () => {
       <main className="justify-center align-center mt-14 md:mt-24">
 
         <div className="mx-auto md:flex justify-center">
-          <div className="text-left self-center mb-4 md:mr-8">
+          <div className="text-left self-center mb-4 md:mr-16 max-w-lg">
 
-            <h1 className="font-semibold text-3xl my-2">
+            <h1 className="font-semibold text-4xl my-2">
               Get your chess games analyzed by experts
             </h1>
 
-            <h5 className="text-md">
+            <h5 className="text-lg">
               AsyncCoach automatically pulls your games to keep your feedback fresh.
             </h5>
 
-            <form className=" bg-opacity-50 bg-black inline-flex mt-2" onSubmit={submitEmail}>
+            <form className=" bg-opacity-50 bg-black inline-flex mt-4" onSubmit={submitEmail}>
               <input className="flex-4 border border-gray-500 pl-1" placeholder="email address"></input>
               <button className="flex-1 text-white bg-red-600 p-2">Sign Up</button>
             </form>
@@ -70,8 +73,8 @@ const Home: NextPage = () => {
           </div>
         </div>
 
-        <div className="flex align-center justify-center flex-wrap mt-3">
-          <div style={cardStyle}>
+        <div className="flex align-center justify-center flex-wrap mt-12">
+          <div style={cardStyle} className=" md:max-w-xs">
             <div className="flex items-center">
               <h2 className="!mr-4">Hands Free</h2>
               <div className="block">
@@ -81,17 +84,17 @@ const Home: NextPage = () => {
             <p>Your games automatically sync with Async Coach, no need to upload anything</p>
           </div>
 
-          <div style={cardStyle}>
-          <div className="flex items-center">
-            <h2 className="!mr-4">Personalized</h2>
-              <div className="block">
-                <Image alt="personalized" height={40} width={40} src={"/exchange.png"}/>
-              </div>
+          <div style={cardStyle} className=" md:max-w-xs md:mx-4">
+            <div className="flex items-center">
+              <h2 className="!mr-4">Personalized</h2>
+                <div className="block">
+                  <Image alt="personalized" height={40} width={40} src={"/exchange.png"}/>
+                </div>
             </div>
             <p>Coaches can track your progress over time to focus on identifying problem areas</p>
           </div>
 
-          <div style={cardStyle}>
+          <div style={cardStyle} className=" md:max-w-xs">
             <div className="flex items-center">
               <h2 className="!mr-4">Save Time</h2>
               <div className="block">
