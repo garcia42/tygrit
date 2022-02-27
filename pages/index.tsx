@@ -26,16 +26,6 @@ const Home: NextPage = () => {
           <Link href={"/"}>
             <a className="font-bold">Async Chess Coach</a>
           </Link>
-
-          {/* <div className=" ml-auto mr-6">
-            <Link href={"/about"}>
-              <a className="mr-3">About</a>
-            </Link> */}
-
-            {/* <Link href={"/signup"}>
-              <a>Sign Up</a>
-            </Link> */}
-          {/* </div> */}
       </div>
 
       <main className="justify-center align-center mt-14 md:mt-24">
