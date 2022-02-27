@@ -3,16 +3,52 @@ import type { NextPage } from 'next'
 import Head from 'next/head'
 import Image from 'next/image'
 import Link from "next/link"
+import { useState } from "react"
 
-function submitEmail(e: React.SyntheticEvent) {
-  e.preventDefault()
-  const target = e.target as typeof e.target & {
-    email: { value: string };
-    password: { value: string };
-  };
-  if (target.email.value) {
-    
-  }
+export const API_URL = process.env.NEXT_PUBLIC_VERCEL_URL ? 'https://' + process.env.NEXT_PUBLIC_VERCEL_URL : "http://localhost:3000";
+
+function recordEmail(email: string) {
+  return fetch('https://api.sendinblue.com/v3/contacts', {
+    method: 'POST',
+    headers: {
+      'api-key': process.env.NEXT_PUBLIC_SEND_BLUE as string,
+      'Accept': 'application/json',
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+      email,
+      "updateEnabled": false,
+      "listIds": [
+        2,
+      ],
+    }),
+  })
+}
+
+function sendConfirmationEmail(email: string) {
+  return fetch('https://api.sendinblue.com/v3/smtp/email', {
+    method: 'POST',
+    headers: {
+      'api-key': process.env.NEXT_PUBLIC_SEND_BLUE as string,
+      'Accept': 'application/json',
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+      sender: {
+        email: "jesus.garcia@asyncchesscoach.com",
+        name: "AsyncChessCoach"
+      },
+      to: [
+        {
+          email,
+        }
+      ],
+      replyTo: {
+        email: "jesus.garcia@asyncchesscoach.com"
+      },
+      templateId: 2,
+    })
+  });
 }
 
 const cardStyle = {
@@ -27,6 +63,43 @@ const cardStyle = {
 } as any;
 
 const Home: NextPage = () => {
+
+  let [email, setEmail] = useState<string>('');
+  let [successToast, setSuccessToast] = useState<boolean>(false);
+  let [failToast, setFailToast] = useState<string>("");
+
+  async function submitEmail(e: React.SyntheticEvent, email: string) {
+    e.preventDefault();
+
+    if (!email) {
+      setFailToast("Please enter an email");
+      return;
+    }
+  
+    return await recordEmail(email)
+      .then((resp) => resp.json()).then(data => {
+        console.log(data);
+        if (!data.code) {
+          return sendConfirmationEmail(email)
+        } else {
+          setFailToast(data.message);
+          throw new Error('Something went wrong confirming email');
+        }
+      }, (e) => {
+        console.log(e);
+      })
+      .then(resp => (resp as Response).json()).then(data => {
+        if (!data.code) {
+          setSuccessToast(true)
+        } else {
+          setFailToast(data.message);
+          throw new Error('Something went wrong sending email');
+        }
+      }, (e) => {
+        console.log(e);
+      });
+  }
+
   return (
     <div className="mx-4 sm:mx-16 lg:mx-32">
       <Head>
@@ -41,6 +114,29 @@ const Home: NextPage = () => {
           </Link>
       </div>
 
+      <div className="fixed bottom-12 left-1/2 transform -translate-x-1/2">
+      {successToast && <div id="toast-success" className="flex items-center w-full max-w-xs p-4 mb-4 text-gray-500 bg-white rounded-lg shadow dark:text-gray-400 dark:bg-gray-800" role="alert">
+            <div className="inline-flex items-center justify-center flex-shrink-0 w-8 h-8 text-green-500 bg-green-100 rounded-lg dark:bg-green-800 dark:text-green-200">
+                <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd"></path></svg>
+            </div>
+            <div className="ml-3 text-sm font-normal">Signed up successfully.</div>
+            <button onClick={() => setSuccessToast(false)} type="button" className="ml-auto -mx-1.5 -my-1.5 bg-white text-gray-400 hover:text-gray-900 rounded-lg focus:ring-2 focus:ring-gray-300 p-1.5 hover:bg-gray-100 inline-flex h-8 w-8 dark:text-gray-500 dark:hover:text-white dark:bg-gray-800 dark:hover:bg-gray-700" data-collapse-toggle="toast-success" aria-label="Close">
+                <span className="sr-only">Close</span>
+                <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fillRule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clipRule="evenodd"></path></svg>
+            </button>
+        </div>}
+        {failToast && <div id="toast-danger" className="flex items-center w-full max-w-xs p-4 mb-4 text-gray-500 bg-white rounded-lg shadow dark:text-gray-400 dark:bg-gray-800" role="alert">
+            <div className="inline-flex items-center justify-center flex-shrink-0 w-8 h-8 text-red-500 bg-red-100 rounded-lg dark:bg-red-800 dark:text-red-200">
+                <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fillRule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clipRule="evenodd"></path></svg>
+            </div>
+            <div className="ml-3 text-sm font-normal">Failure signing up: {failToast}</div>
+            <button onClick={() => setFailToast("")} type="button" className="ml-auto -mx-1.5 -my-1.5 bg-white text-gray-400 hover:text-gray-900 rounded-lg focus:ring-2 focus:ring-gray-300 p-1.5 hover:bg-gray-100 inline-flex h-8 w-8 dark:text-gray-500 dark:hover:text-white dark:bg-gray-800 dark:hover:bg-gray-700" data-collapse-toggle="toast-danger" aria-label="Close">
+                <span className="sr-only">Close</span>
+                <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fillRule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clipRule="evenodd"></path></svg>
+            </button>
+        </div>}
+      </div>
+
       <main className="justify-center align-center mt-14 md:mt-24">
 
         <div className="mx-auto md:flex justify-center">
@@ -51,11 +147,11 @@ const Home: NextPage = () => {
             </h1>
 
             <h5 className="text-lg">
-              AsyncCoach automatically pulls your games to keep your feedback fresh.
+              Passive feedback from your regular games
             </h5>
 
-            <form className=" bg-opacity-50 bg-black inline-flex mt-4" onSubmit={submitEmail}>
-              <input className="flex-4 border border-gray-500 pl-1" placeholder="email address"></input>
+            <form className=" bg-opacity-50 bg-black inline-flex mt-4" onSubmit={(e) => submitEmail(e, email)}>
+              <input name="email" value={email} onChange={(e) => setEmail(e.target.value)} className="flex-4 border border-gray-500 pl-1" placeholder="email address"></input>
               <button className="flex-1 text-white bg-red-600 p-2">Sign Up</button>
             </form>
           </div>
@@ -66,15 +162,15 @@ const Home: NextPage = () => {
           </div>
         </div>
         
-        <div className="items-center text-center ">
+        <div className="items-center text-center mt-6">
           <div>Integrated with:</div>
           <div className="font-semibold">
             lichess &#8226; chess.com
           </div>
         </div>
 
-        <div className="flex align-center justify-center flex-wrap mt-12">
-          <div style={cardStyle} className=" md:max-w-xs">
+        <div className="flex align-center justify-center flex-wrap mt-6">
+          <div style={cardStyle} className="hover:!text-blue-400 !border-blue-400 md:max-w-xs">
             <div className="flex items-center">
               <h2 className="!mr-4">Hands Free</h2>
               <div className="block">
@@ -84,7 +180,7 @@ const Home: NextPage = () => {
             <p>Your games automatically sync with Async Coach, no need to upload anything</p>
           </div>
 
-          <div style={cardStyle} className=" md:max-w-xs md:mx-4">
+          <div style={cardStyle} className="hover:!text-blue-400 !border-blue-400 md:max-w-xs md:mx-4">
             <div className="flex items-center">
               <h2 className="!mr-4">Personalized</h2>
                 <div className="block">
@@ -94,7 +190,7 @@ const Home: NextPage = () => {
             <p>Coaches can track your progress over time to focus on identifying problem areas</p>
           </div>
 
-          <div style={cardStyle} className=" md:max-w-xs">
+          <div style={cardStyle} className="hover:!text-blue-400 !border-blue-400 md:max-w-xs">
             <div className="flex items-center">
               <h2 className="!mr-4">Save Time</h2>
               <div className="block">
