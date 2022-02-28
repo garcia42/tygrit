@@ -90,7 +90,8 @@ const Home: NextPage = () => {
       })
       .then(resp => (resp as Response).json()).then(data => {
         if (!data.code) {
-          setSuccessToast(true)
+          setSuccessToast(true);
+          (window as any).gtag('event', 'conversion', {"send_to": process.env.NEXT_PUBLIC_GOOGLE_ADS_CONV})
         } else {
           setFailToast(data.message);
           throw new Error('Something went wrong sending email');

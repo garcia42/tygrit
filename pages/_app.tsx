@@ -36,6 +36,7 @@ function MyApp({ Component, pageProps }: AppProps) {
           gtag('config', '${process.env.NEXT_PUBLIC_GA}', {
             page_path: window.location.pathname,
           });
+          gtag('config', '${process.env.NEXT_PUBLIC_GOOGLE_ADS}');
         `,
       }}
     />
