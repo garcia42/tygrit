@@ -4,6 +4,8 @@ import Head from 'next/head'
 import Image from 'next/image'
 import Link from "next/link"
 import { useState } from "react"
+import Toasts from "../components/Toasts"
+import ReadySlider from "../components/ReadySlider"
 
 export const API_URL = process.env.NEXT_PUBLIC_VERCEL_URL ? 'https://' + process.env.NEXT_PUBLIC_VERCEL_URL : "http://localhost:3000";
 
@@ -62,11 +64,18 @@ const cardStyle = {
   "transition": "color 0.15s ease, border-color 0.15s ease",
 } as any;
 
+typeof window !== 'undefined' && localStorage.setItem('seenReadySlider', '');
+
 const Home: NextPage = () => {
 
   let [email, setEmail] = useState<string>('');
-  let [successToast, setSuccessToast] = useState<boolean>(false);
+  let [successToast, setSuccessToast] = useState<string>("");
   let [failToast, setFailToast] = useState<string>("");
+
+  let [showSlider, setShowSlider] = useState<boolean>(typeof window !== 'undefined' && !localStorage.getItem('seenReadySlider'));
+  if (typeof window !== 'undefined' && showSlider) {
+    document.body.style.overflow = 'hidden';
+  }
 
   async function submitEmail(e: React.SyntheticEvent, email: string) {
     e.preventDefault();
@@ -78,7 +87,6 @@ const Home: NextPage = () => {
   
     return await recordEmail(email)
       .then((resp) => resp.json()).then(data => {
-        console.log(data);
         if (!data.code) {
           return sendConfirmationEmail(email)
         } else {
@@ -90,8 +98,9 @@ const Home: NextPage = () => {
       })
       .then(resp => (resp as Response).json()).then(data => {
         if (!data.code) {
-          setSuccessToast(true);
-          (window as any).gtag('event', 'conversion', {"send_to": process.env.NEXT_PUBLIC_GOOGLE_ADS_CONV})
+          setSuccessToast("Success");
+          (window as any).gtag('event', 'conversion', {"send_to": process.env.NEXT_PUBLIC_GOOGLE_ADS_CONV});
+          (window as any).gtag('event', 'sign_up', {"send_to": process.env.NEXT_PUBLIC_GA});
         } else {
           setFailToast(data.message);
           throw new Error('Something went wrong sending email');
@@ -102,7 +111,7 @@ const Home: NextPage = () => {
   }
 
   return (
-    <div className="mx-4 sm:mx-16 lg:mx-32">
+    <div className="mx-4 sm:mx-16 lg:mx-24">
       <Head>
         <title>Async Chess Coach</title>
         <meta name="description" content="Games reviewed in the background" />
@@ -114,31 +123,8 @@ const Home: NextPage = () => {
             <a className="font-bold flex">
               <Image width={30} height={30} alt="logo" src={"/chess-strategy.png"}/>
               <div className="self-center">Async Chess Coach</div>
-              </a>
+            </a>
           </Link>
-      </div>
-
-      <div className="fixed bottom-12 left-1/2 transform -translate-x-1/2">
-      {successToast && <div id="toast-success" className="flex items-center w-full max-w-xs p-4 mb-4 text-gray-500 bg-white rounded-lg shadow dark:text-gray-400 dark:bg-gray-800" role="alert">
-            <div className="inline-flex items-center justify-center flex-shrink-0 w-8 h-8 text-green-500 bg-green-100 rounded-lg dark:bg-green-800 dark:text-green-200">
-                <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd"></path></svg>
-            </div>
-            <div className="ml-3 text-sm font-normal">Signed up successfully.</div>
-            <button onClick={() => setSuccessToast(false)} type="button" className="ml-auto -mx-1.5 -my-1.5 bg-white text-gray-400 hover:text-gray-900 rounded-lg focus:ring-2 focus:ring-gray-300 p-1.5 hover:bg-gray-100 inline-flex h-8 w-8 dark:text-gray-500 dark:hover:text-white dark:bg-gray-800 dark:hover:bg-gray-700" data-collapse-toggle="toast-success" aria-label="Close">
-                <span className="sr-only">Close</span>
-                <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fillRule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clipRule="evenodd"></path></svg>
-            </button>
-        </div>}
-        {failToast && <div id="toast-danger" className="flex items-center w-full max-w-xs p-4 mb-4 text-gray-500 bg-white rounded-lg shadow dark:text-gray-400 dark:bg-gray-800" role="alert">
-            <div className="inline-flex items-center justify-center flex-shrink-0 w-8 h-8 text-red-500 bg-red-100 rounded-lg dark:bg-red-800 dark:text-red-200">
-                <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fillRule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clipRule="evenodd"></path></svg>
-            </div>
-            <div className="ml-3 text-sm font-normal">Failure signing up: {failToast}</div>
-            <button onClick={() => setFailToast("")} type="button" className="ml-auto -mx-1.5 -my-1.5 bg-white text-gray-400 hover:text-gray-900 rounded-lg focus:ring-2 focus:ring-gray-300 p-1.5 hover:bg-gray-100 inline-flex h-8 w-8 dark:text-gray-500 dark:hover:text-white dark:bg-gray-800 dark:hover:bg-gray-700" data-collapse-toggle="toast-danger" aria-label="Close">
-                <span className="sr-only">Close</span>
-                <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fillRule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clipRule="evenodd"></path></svg>
-            </button>
-        </div>}
       </div>
 
       <main className="justify-center align-center mt-14 md:mt-24">
@@ -146,16 +132,16 @@ const Home: NextPage = () => {
         <div className="mx-auto md:flex justify-center">
           <div className="text-left self-center mb-4 md:mr-16 max-w-lg">
 
-            <h1 className="font-semibold text-4xl my-2">
-              Get your chess games analyzed by experts
+            <h1 className="font-semibold text-4xl md:text-5xl my-2">
+              Get your chess games analyzed by masters
             </h1>
 
-            <h5 className="text-lg">
+            <h5 className="text-lg md:text-xl">
               Tailored feedback for your games
             </h5>
 
-            <div className=" bg-opacity-50 mt-4">
-              <span>Sign up to be notified of the beta release</span>
+            <div className="bg-opacity-50 mt-4 text-lg md:text-xl">
+              <p>Sign up to be notified of the beta release</p>
               <form className=" bg-opacity-50 bg-black inline-flex" onSubmit={(e) => submitEmail(e, email)}>
                 <input name="email" value={email} onChange={(e) => setEmail(e.target.value)} className="flex-4 border border-gray-500 pl-1" placeholder="email address"></input>
                 <button className="flex-1 text-white bg-red-600 p-2">Sign Up</button>
@@ -165,7 +151,6 @@ const Home: NextPage = () => {
 
           <div className="hidden md:flex justify-between">
             <Image className="rounded-xl mx-3" alt="chess piece" width={300} height={250} src="https://images.unsplash.com/photo-1538221566857-f20f826391c6?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1771&q=80"/>
-            {/* <Image className="!hidden rounded-xl" alt="chess piece" width={300} height={250} src="https://images.unsplash.com/photo-1538221566857-f20f826391c6?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1771&q=80"/> */}
           </div>
         </div>
         
@@ -177,7 +162,7 @@ const Home: NextPage = () => {
         </div>
 
         <div className="flex align-center justify-center flex-wrap mt-6">
-          <div style={cardStyle} className="hover:!text-blue-400 !border-blue-400 md:max-w-xs">
+          <div style={cardStyle} className="hover:!text-blue-400 hover:!border-blue-400 md:max-w-xs">
             <div className="flex items-center">
               <h2 className="!mr-4">Hands Free</h2>
               <div className="block">
@@ -187,17 +172,17 @@ const Home: NextPage = () => {
             <p>Your games automatically sync with Async Coach, no need to upload anything</p>
           </div>
 
-          <div style={cardStyle} className="hover:!text-blue-400 !border-blue-400 md:max-w-xs md:mx-4">
+          <div style={cardStyle} className="hover:!text-blue-400 hover:!border-blue-400 md:max-w-xs md:mx-4">
             <div className="flex items-center">
               <h2 className="!mr-4">Personalized</h2>
                 <div className="block">
                   <Image alt="personalized" height={40} width={40} src={"/exchange.png"}/>
                 </div>
             </div>
-            <p>Let experts look at your play and pin point exactly what you need to play better chess</p>
+            <p>Let masters look at your play and pin point exactly what you need to play better chess</p>
           </div>
 
-          <div style={cardStyle} className="hover:!text-blue-400 !border-blue-400 md:max-w-xs">
+          <div style={cardStyle} className="hover:!text-blue-400 hover:!border-blue-400 md:max-w-xs">
             <div className="flex items-center">
               <h2 className="!mr-4">Save Time</h2>
               <div className="block">
@@ -217,6 +202,14 @@ const Home: NextPage = () => {
               <p className="ml-1">FM Chadley Gigaton (2469)</p>
             </div>
           </div>
+        </div>
+
+        <div className="bg-opacity-50 mt-10 text-lg md:text-xl justify-center text-center">
+          <p>Sign up to be notified of the beta release</p>
+          <form className=" bg-opacity-50 bg-black inline-flex" onSubmit={(e) => submitEmail(e, email)}>
+            <input name="email" value={email} onChange={(e) => setEmail(e.target.value)} className="flex-4 border border-gray-500 pl-1" placeholder="email address"></input>
+            <button className="flex-1 text-white bg-red-600 p-2">Sign Up</button>
+          </form>
         </div>
       </main>
       <footer className="flex flex-1 py-4 mt-8 border-t justify-center items-center">
@@ -247,6 +240,10 @@ const Home: NextPage = () => {
         </div>
         </div>
       </footer>
+
+      <Toasts successToast={successToast} setSuccessToast={setSuccessToast} failToast={failToast} setFailToast={setFailToast}/>
+
+      {showSlider && <ReadySlider setShowSlider={setShowSlider}/>}
     </div>
   )
 }
