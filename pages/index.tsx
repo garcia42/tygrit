@@ -17,8 +17,6 @@ const cardStyle = {
   "transition": "color 0.15s ease, border-color 0.15s ease",
 } as any;
 
-// typeof window !== 'undefined' && localStorage.setItem('seenReadySlider', '');
-
 const Home: NextPage = () => {
   let [successToast, setSuccessToast] = useState<string>("");
   let [failToast, setFailToast] = useState<string>("");

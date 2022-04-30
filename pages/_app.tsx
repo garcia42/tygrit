@@ -1,6 +1,6 @@
-import type { AppProps } from 'next/app'
+import App, {AppProps} from 'next/app'
 import { useRouter } from "next/router";
-import { useEffect } from "react";
+import React, { useEffect } from "react";
 
 function MyApp({ Component, pageProps }: AppProps) {
   const router = useRouter();
@@ -18,10 +18,9 @@ function MyApp({ Component, pageProps }: AppProps) {
     };
   }, [router.events]);
 
+  var Component2 = (Component as any)
   return (
-    <>
-      <Component {...pageProps} />
-    </>
+    <Component2 {...pageProps} />
   );
 }
 
