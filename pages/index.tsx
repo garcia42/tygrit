@@ -24,8 +24,8 @@ const Home: NextPage = () => {
   return (
     <div className="">
       <Head>
-        <title>Async Chess Coach</title>
-        <meta name="description" content="Games reviewed in the background" />
+        <title>Tygrit Investing</title>
+        <meta name="description" content="Quick, hassle-free offers on mobile homes" />
         <link rel="icon" href="/chess-strategy.png" />
       </Head>
 
@@ -117,14 +117,14 @@ const Home: NextPage = () => {
             <li>Tenants are always late with rent and you&apos;ve had enough?</li>
             <li>Don&apos;t want to pay agent commision on the sale?</li>
           </ul>
-          <h2 className=" mb-1 text-lg mt-3 font-semibold">If so please give us a call at 916-912-8488 and let&apos;s work together on a solution.</h2>
+          <h2 className=" mb-1 text-lg mt-3 font-semibold">If so please give us a call at (425) 243-7573 and let&apos;s work together on a solution.</h2>
         </div>
 
         <div className=" max-w-2xl justify-center mx-auto text-center my-3">
           <p className="text-lg mb-1 font-semibold">Who are we?</p>
           <div className="justify-center items-center md:flex mx-auto">
             <div className="flex-1">
-            <Image alt="Chess Review" width={300} height={300} src={"/jesusAndJordan.jpeg"}/>
+            <Image alt="Who are we?" width={300} height={300} src={"/jesusAndJordan.jpeg"}/>
             </div>
             <div className="md:w-1/3 mx-4 md:mx-2 p-2 bg-slate-200 rounded-xl flex-1">
               <div className="">Hi, i&apos;m Jesus and this is my fiance Jordan.<br/><br/>We&apos;re passionate about housing and enjoy helping others with their housing needs.<br/><br/> I do software engineering and Jordan runs an environmental consulting company.</div>

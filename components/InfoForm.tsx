@@ -8,6 +8,9 @@ interface InfoFormPropTypes {
 export const API_URL = process.env.NEXT_PUBLIC_VERCEL_URL ? 'https://' + process.env.NEXT_PUBLIC_VERCEL_URL : "http://localhost:3000";
 
 function recordEmail(email: string, name: string, address: string, phone: string) {
+  phone = phone.replace('-', '')
+  phone = phone.replace('(', '')
+  phone = phone.replace(')', '')
   return fetch('https://api.sendinblue.com/v3/contacts', {
     method: 'POST',
     headers: {
@@ -17,13 +20,12 @@ function recordEmail(email: string, name: string, address: string, phone: string
     },
     body: JSON.stringify({
       email,
-      FNAME: name,
-      LNAME: address,
-      SMS: phone,
-      "updateEnabled": false,
+      updateEnabled: true,
       "listIds": [
         2,
       ],
+      
+      attributes: { FIRSTNAME: name, LASTNAME: address, sms: "+91" + phone },
     }),
   })
 }
@@ -102,7 +104,7 @@ export default function InfoForm({setSuccessToast, setFailToast}: InfoFormPropTy
     return (
       <div className="m-4 bg-gray-200 p-4">
         <p className="text-xl font-semibold">Mobile Home Cash Offer</p>
-        <p className="">Fill out the information below to get started or call 916-912-8488</p>
+        <p className="">Fill out the information below to get started or call (425) 243-7573</p>
         <form className="mt-2" onSubmit={(e) => submitEmail(e, email)}>
           <div className="my-1">
             <p>Your name<span className="text-red-400">*</span></p>
