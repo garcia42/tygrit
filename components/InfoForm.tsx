@@ -102,19 +102,19 @@ export default function InfoForm({setSuccessToast, setFailToast}: InfoFormPropTy
         }
   
     return (
-      <div className="m-4 bg-gray-200 p-4 shadow-xl">
-        <p className="text-xl font-semibold">Get Your Cash Offer</p>
+      <div className="md:my-4 mx-4 bg-gray-200 p-4 shadow-xl">
+        <p className="text-xl font-semibold">Get Cash for your Land</p>
         <p className="">Fill out the information below to get started or call (425) 243-7573</p>
-        <form className="mt-2" onSubmit={(e) => submitEmail(e, email)}>
-          <div className="my-1">
-            <p>Your name<span className="text-red-400">*</span></p>
-            <input required={true} className="border border-gray-500 p-2 flex w-full rounded-lg" type="address" name="name" value={name} onChange={(e) => setName(e.target.value)} placeholder="Name"></input>
+        <form className="mt-2 max-w-lg mx-auto" onSubmit={(e) => submitEmail(e, email)}>
+          <div className="my-2">
+            <div className="hidden md:block"><p>Your name<span className="text-red-400">*</span></p></div>
+            <input required={true} className="border border-gray-500 p-2 flex w-full rounded-lg" type="address" name="name" value={name} onChange={(e) => setName(e.target.value)} placeholder="Name*"></input>
           </div>
-          <div className="my-1">
-            <p>Property Address<span className="text-red-400">*</span></p>
-            <input required={true} className="border border-gray-500 p-2 flex w-full rounded-lg" type="address" name="email" value={address} onChange={(e) => setAddress(e.target.value)} placeholder="Address"></input>
+          <div className="my-2">
+            <div className="hidden md:block"><p>Property Address<span className="text-red-400">*</span></p></div>
+            <input required={true} className="border border-gray-500 p-2 flex w-full rounded-lg" type="address" name="email" value={address} onChange={(e) => setAddress(e.target.value)} placeholder="Address*"></input>
           </div>
-          {/* <div className="my-1">
+          {/* <div className="my-2">
             <p>My home is...<span className="text-red-400">*</span></p>
             <ul className=" flex">
               <li className=" inline text-center items-center relative flex-1">
@@ -125,16 +125,16 @@ export default function InfoForm({setSuccessToast, setFailToast}: InfoFormPropTy
               </li>
             </ul>
           </div> */}
-          <div className="my-1">
-            <p>Phone<span className="text-red-400">*</span></p>
-            <input required={true} className="border border-gray-500 p-2 flex w-full rounded-lg" name="email" value={phone} onChange={(e) => setPhone(e.target.value)} placeholder="Phone number"></input>
+          <div className="my-2">
+            <div className="hidden md:block"><p>Phone<span className="text-red-400">*</span></p></div>
+            <input required={true} className="border border-gray-500 p-2 flex w-full rounded-lg" name="email" value={phone} onChange={(e) => setPhone(e.target.value)} placeholder="Phone number*"></input>
           </div>
-          <div className="my-1">
-            <p>Email<span className="text-red-400">*</span></p>
-            <input required={true} className="border border-gray-500 p-2 flex w-full rounded-lg" name="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="Email address"></input>
+          <div className="my-2">
+            <div className="hidden md:block"><p>Email<span className="text-red-400">*</span></p></div>
+            <input required={true} className="border border-gray-500 p-2 flex w-full rounded-lg" name="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="Email address*"></input>
           </div>
           <div className="flex mt-2">
-            <button className="text-white bg-red-600 p-2 mx-auto w-6/12 rounded-lg">Get my Cash Offer</button>
+            <button className="text-white bg-red-600 p-2 mx-auto md:w-6/12 rounded-lg">Get my Cash Offer</button>
           </div>
         </form>
       </div>

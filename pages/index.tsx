@@ -59,6 +59,10 @@ const Home: NextPage = () => {
           </div>
         </div>
 
+        <div className="sm:hidden block mt-2">
+          <InfoForm setSuccessToast={setSuccessToast} setFailToast={setFailToast}/>
+        </div>
+
         <div className="items-center text-center mt-6 mx-4">
           <div className="text-xl">How it works:</div>
           <div className="font-semibold">
