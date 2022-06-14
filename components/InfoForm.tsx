@@ -102,8 +102,8 @@ export default function InfoForm({setSuccessToast, setFailToast}: InfoFormPropTy
         }
   
     return (
-      <div className="m-4 bg-gray-200 p-4">
-        <p className="text-xl font-semibold">Mobile Home Cash Offer</p>
+      <div className="m-4 bg-gray-200 p-4 shadow-xl">
+        <p className="text-xl font-semibold">Get Your Cash Offer</p>
         <p className="">Fill out the information below to get started or call (425) 243-7573</p>
         <form className="mt-2" onSubmit={(e) => submitEmail(e, email)}>
           <div className="my-1">

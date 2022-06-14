@@ -29,10 +29,10 @@ const Home: NextPage = () => {
         <link rel="icon" href="/chess-strategy.png" />
       </Head>
 
-      <div className="flex py-4 bg-red-400 px-4 sm:px-16 lg:px-24 justify-center">
+      <div className="flex py-2 bg-red-400 px-4 sm:px-16 lg:px-24 justify-center">
           <Link href={"/"}>
             <a className="font-semibold flex">
-              <div className="self-center text-center text-white">SELL YOUR MOBILE HOME IN GEORGIA TODAY!</div>
+              <div className="self-center text-center text-white">SELL YOUR MOBILE HOME IN WASHINGTON TODAY!</div>
             </a>
           </Link>
       </div>
@@ -40,15 +40,15 @@ const Home: NextPage = () => {
       <main className="justify-center align-center">
         <div className="relative">
           <div className="mx-auto sm:flex justify-center relative bg-[url('/mobileHome.jpeg')] bg-cover">
-            <div className="bg-cover bg-gradient-to-b from-gray-500 absolute top-0 w-full h-full opacity-50"/>
+            <div className="bg-cover bg-gradient-to-b from-gray-600 absolute top-0 w-full h-full opacity-50"/>
             <div className="md:flex p-4 z-0 relative">
               <div className="text-left self-center pb-4 md:pr-8 max-w-lg text-white">
 
-                <h1 className="font-semibold text-2xl md:text-3xl md:pt-0 pt-4 text-white">
-                  We Buy Mobile Homes and Land in Augusta, Georgia
+                <h1 className="text-shadow-xl font-semibold text-2xl md:text-3xl md:pt-0 pt-4 text-white shadow-lg">
+                  We Buy Mobile Homes and Land in Port Orchard, Washington
                 </h1>
 
-                <h5 className="text-lg md:text-xl mt-2">
+                <h5 className="text-shadow-xl text-lg md:text-xl mt-2">
                   Sell your mobile home for cash!
                 </h5>
               </div>
@@ -99,17 +99,17 @@ const Home: NextPage = () => {
         </div>
 
         <div className="w-8/12 mx-auto my-10">
-          <h2 className="mb-1 font-bold text-xl">Mobile Home Buyer in Augusta, Georgia</h2>
-          Located in <b>Augusta, GA</b> and need to sell your mobile or manufactured home? We are mobile home buyers and we make cash offers on <b>as-is</b> mobile and manufactured homes in Augusta, GA.
+          <h2 className="mb-1 font-semibold text-xl">Mobile Home Buyer in Washington</h2>
+          Located in <b>Port Orchard, WA</b> and need to sell your mobile or manufactured home? We are mobile home buyers and we make cash offers on <b>as-is</b> mobile and manufactured homes in Port Orchard, WA.
         </div>
 
         <div className="w-8/12 mx-auto my-10">
-          <h2 className="mb-1 font-bold text-xl">Do we purchase the land or just the home?</h2>
+          <h2 className="mb-1 font-semibold text-xl">Do we purchase the land or just the home?</h2>
           We can purchase any of the land and/or home. If you&apos;re looking to move quickly and don&apos;t have the time or the energy to remove debris from the land then we&apos;ll gladly handle that for you.
         </div>
 
         <div className="w-8/12 mx-auto my-10">
-          <h2 className=" mb-1 font-bold text-xl">Are you in any of these situations?</h2>
+          <h2 className=" mb-1 font-semibold text-xl">Are you in any of these situations?</h2>
           <ul className=" list-disc">
             <li>Need to sell as-is, for cash?</li>
             <li>Selling your home without land?</li>
@@ -117,7 +117,7 @@ const Home: NextPage = () => {
             <li>Tenants are always late with rent and you&apos;ve had enough?</li>
             <li>Don&apos;t want to pay agent commision on the sale?</li>
           </ul>
-          <h2 className=" mb-1 text-lg mt-3 font-semibold">If so please give us a call at (425) 243-7573 and let&apos;s work together on a solution.</h2>
+          <h2 className=" mb-1 text-lg mt-3 font-semibold">If so, give us a call at (425) 243-7573 and let&apos;s work together on a solution.</h2>
         </div>
 
         <div className=" max-w-2xl justify-center mx-auto text-center my-3">

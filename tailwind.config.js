@@ -11,5 +11,6 @@ module.exports = {
     "postcss-import",
     "tailwindcss",
     "autoprefixer",
+    require('tailwindcss-textshadow')
   ],
 }
