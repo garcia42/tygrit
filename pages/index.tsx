@@ -39,7 +39,7 @@ const Home: NextPage = () => {
               <div className="text-left self-center pb-4 md:pr-8 max-w-lg text-white">
 
                 <h1 className="text-shadow-xl font-semibold text-2xl md:text-3xl md:pt-0 pt-4 text-white shadow-lg">
-                  Sell Your Land in Port Orchard Today
+                  Sell Your Land in the Greater Seattle Area Today
                 </h1>
 
                 <h5 className="text-shadow-xl text-lg md:text-xl mt-2">
