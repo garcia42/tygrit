@@ -8,7 +8,8 @@ import Toasts from "../components/Toasts"
 import InfoForm from "../components/InfoForm"
 import dynamic from 'next/dynamic'
 import HowItWorks from "../components/HowItWorks"
-const FamewallEmbed = dynamic(() => import("react-famewall"), { ssr: false }) //<- set SSr to false
+let FamewallEmbed = dynamic(() => import("react-famewall"), { ssr: false }) //<- set SSr to false
+FamewallEmbed = FamewallEmbed as any
 
 const Home: NextPage = () => {
   let [successToast, setSuccessToast] = useState<string>("");
@@ -34,7 +35,7 @@ const Home: NextPage = () => {
         <div className="relative">
           <div className="mx-auto sm:flex justify-center relative bg-[url('/land.jpg')] bg-cover">
             <div className="bg-cover bg-gradient-to-b from-gray-600 absolute top-0 w-full h-full opacity-70"/>
-            <div className="md:flex p-4 z-0 relative">
+            <div className="md:flex p-4 py-8 z-0 relative">
               <div className="text-left self-center pb-4 md:pr-8 max-w-lg text-white">
 
                 <h1 className="text-shadow-xl font-semibold text-2xl md:text-3xl md:pt-0 pt-4 text-white shadow-lg">
@@ -59,9 +60,8 @@ const Home: NextPage = () => {
         <HowItWorks/>
 
         <div className="mx-auto text-center text-lg font-semibold tracking-wide mt-2 bg-white mb-2">TESTIMONIALS</div>
-        <FamewallEmbed
-          wallUrl="tygrit"
-        />
+        {/*// @ts-ignore */}
+        <FamewallEmbed wallUrl="tygrit"/>
 
         <div className=" mx-auto md:w-6/12 bg-opacity-50 mt-10 text-lg md:text-xl justify-center text-center">
           <InfoForm setSuccessToast={setSuccessToast} setFailToast={setFailToast}/>
