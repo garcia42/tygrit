@@ -18,6 +18,7 @@
     "postcss": "^8.4.7",
     "react": "17.0.2",
     "react-dom": "17.0.2",
+    "react-famewall": "^0.1.8",
     "sib-api-v3-sdk": "^8.2.1",
     "tailwindcss": "^3.0.23",
     "tailwindcss-textshadow": "^2.1.3",
